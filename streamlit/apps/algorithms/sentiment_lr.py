@@ -1,4 +1,3 @@
-
 from googletrans import Translator
 import altair as alt
 
@@ -6,12 +5,12 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 
-
 import joblib
+
 tr = Translator()
 
 pipl_lr = joblib.load(
-    open(r'D:\projects\BEIT\precide\Backend\models\lr_model.pkl', 'rb'))
+    open(r'D:\projects\BEIT\precide\Backend\models\emotion.pkl', 'rb'))
 
 
 def predict_suicide(snt):
@@ -22,8 +21,6 @@ def predict_suicide(snt):
 def get_probability(snt):
     results = pipl_lr.predict_proba([snt])
     return results
-
-
 
 
 def predict_lr(text):
@@ -38,8 +35,8 @@ def predict_lr(text):
         </style>""", unsafe_allow_html=True)
     submit_st = st.sidebar.button(label='Predict')
     if submit_st:
-        
-        st.write(f"<div><h1 style='color:white;text-align:center;font-size:60px'>{predict_suicide(stext) } </h1></div>",unsafe_allow_html=True)
+        st.write(f"<div><h1 style='color:white;text-align:center;font-size:60px'>{predict_suicide(stext)} </h1></div>",
+                 unsafe_allow_html=True)
         """with st.expander('Result', expanded=True):
             colp, colv = st.columns(2)
             prediction = predict_suicide(stext)
@@ -62,5 +59,5 @@ def predict_lr(text):
                 fig = alt.Chart(proba_df_clean).mark_bar().encode(
                     x='emotions', y='probability', color='emotions')
                 st.altair_chart(fig, use_container_width=True)
-                
+
 """

@@ -28,15 +28,27 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 def app():
-    # st.title("Prediction page")
-    userid = st.sidebar.text_input(label="Enter user url ex-@abc")
+    st.write("<div><h1 style='color:white;text-align:center;'>Profile analysis</h1></div>", unsafe_allow_html=True)
+
+    st.sidebar.write("<div><h2 style='color:white;text-align:center;margin-top:50px'>Twitter UserID</h2></div>", unsafe_allow_html=True)
+    userid = st.sidebar.text_input(label="",placeholder="Example - @elonmusk")
+
+    m = st.markdown("""
+    <style>
+    div.stButton > button:first-child {
+        background-color: rgb(204, 49, 49);
+        width : 100px;
+        margin-left : 100px
+    }
+    </style>""", unsafe_allow_html=True)
     sButton = st.sidebar.button(label="search")
     if sButton:
         api = tweepy.API(auth)
         predlist=[]
         tweets_list = api.user_timeline(screen_name=userid, tweet_mode="extended", count=10)
-        st.write("<div><h1 style='color:white;text-align:center;'>Profile analysis</h1></div>", unsafe_allow_html=True)
+
         with st.expander("See explanation"):
+
             for tweet in tweets_list:
                 tweet_url = f"https://twitter.com/{tweet.user.screen_name}/status/{tweet.id_str}"
                 api = "https://publish.twitter.com/oembed?url={}".format(tweet_url)
