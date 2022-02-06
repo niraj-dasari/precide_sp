@@ -1,5 +1,5 @@
 import streamlit as st
-from .algorithms.logistic_regression import predict_lr
+from .algorithms.sentiment_lr import predict_lr
 
 
 def text_input():
@@ -21,9 +21,10 @@ def input_choice(option):
 
 def app():
     #st.title("Prediction page")
-
+    st.sidebar.write("<div><h2 style='color:white;text-align:center;padding:0px'>Sentiment analysis</h2></div>",
+                     unsafe_allow_html=True)
     st.sidebar.write(
-        "<style>div.row-widget.stRadio > div{flex-direction:row;}</style>",
+        "<style>div.row-widget.stRadio > div{flex-direction:row;justify-content:space-evenly;}</style>",
         unsafe_allow_html=True,
     )
     option_input = st.sidebar.radio("", ("Text", "URL", "Image"))
@@ -38,6 +39,8 @@ def app():
         ),
     )
     st.write("<div><h1 style='color:white;text-align:center;'>Analysis Result</h1></div>",unsafe_allow_html=True)
+
+
     text = input_choice(option_input)
     if text is not None:
         # st.write(Text)

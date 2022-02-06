@@ -69,9 +69,11 @@ def input_choice(option):
 
 def app():
     #st.title("Prediction page")
+    st.sidebar.write("<div><h2 style='color:white;text-align:center;padding:0px;'>Text Prediction</h2></div>",
+                     unsafe_allow_html=True)
 
     st.sidebar.write(
-        "<style>div.row-widget.stRadio > div{flex-direction:row;}</style>",
+        "<style>div.row-widget.stRadio > div{flex-direction:row;justify-content:space-evenly;}</style>",
         unsafe_allow_html=True,
     )
     option_input = st.sidebar.radio("", ("Text", "URL", "Image"))
