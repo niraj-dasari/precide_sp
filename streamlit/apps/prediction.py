@@ -1,5 +1,7 @@
 import streamlit as st
 import numpy as np
+
+
 from .algorithms.logistic_regression import predict_lr
 import streamlit.components.v1 as components
 import requests
@@ -19,13 +21,16 @@ def url_input():
         response = requests.get(api)
         res =response.json()['html']
         tweet_text = re.sub(r"\<[^<>]*\>", "", res)
-        components.html(res,height=700)
-        st.write(tweet_text)
+        with st.sidebar:
+            with st.expander("Tweet",expanded=False):
+
+                components.html(res,height=500,scrolling=True)
+        #st.write(tweet_text)
         return tweet_text
     return url
 
 def image_input():
-    '''reader = ocr.Reader(['en'],gpu=True,model_storage_directory='.') 
+    reader = ocr.Reader(['en','hi'],gpu=True,model_storage_directory='.')
     image = st.sidebar.file_uploader(label = "Upload your image here",type=['png','jpg','jpeg'])
     if image is not None:
         with st.expander('OCR', expanded=True):
@@ -53,8 +58,8 @@ def image_input():
                 st.success("Text is extracted from image")
                 return result_text
     else:
-        st.write("")'''
-    pass
+        st.write("")
+    return "Please Select a image! 🙂"
 
 
 
@@ -69,9 +74,11 @@ def input_choice(option):
 
 def app():
     #st.title("Prediction page")
+    st.sidebar.write("<div><h2 style='color:white;text-align:center;padding:0px;'>Text Prediction</h2></div>",
+                     unsafe_allow_html=True)
 
     st.sidebar.write(
-        "<style>div.row-widget.stRadio > div{flex-direction:row;}</style>",
+        "<style>div.row-widget.stRadio > div{flex-direction:row;justify-content:space-evenly;}</style>",
         unsafe_allow_html=True,
     )
     option_input = st.sidebar.radio("", ("Text", "URL", "Image"))
@@ -94,7 +101,7 @@ def app():
         elif option_algorithm == "Naive Bayes":
             st.subheader("Naive Bayes")
         elif option_algorithm == "Support Vector Machine":
-            st.subheader("svm")
+            st.subheader("Naive Bayes")
         else:
             st.subheader("Random Forest")
     
